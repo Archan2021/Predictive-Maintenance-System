@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: prediction_service
+          uri: http://localhost:8080
+          predicates:
+            - Path=/predict/**
+        - id: ml_service
+          uri: http://localhost:5000
+          predicates:
+            - Path=/ml/**
+        - id: data_processing_service
+          uri: http://localhost:8081
+          predicates:
+            - Path=/data/**
+        - id: alerting_service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/alerts/**
+
+server:
+  port: 8090
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
